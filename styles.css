@@ -1,17 +1,17 @@
 :root {
     --primary-color: #4a9eff;
-    --secondary-color: #8c5eff;
-    --accent-color: #ff3366;
+    --secondary-color: #6b8cff;
+    --accent-color: #3b7dff;
     --text-color: #2d3436;
     --light-bg: #f5f6fa;
-    --gradient: linear-gradient(135deg, #4a9eff, #8c5eff);
+    --gradient: linear-gradient(135deg, #4a9eff, #6b8cff);
     --code-bg: #1a1f3c;
     --glow-color: rgba(74, 158, 255, 0.3);
-    --circuit-color: rgba(140, 94, 255, 0.4);
+    --circuit-color: rgba(74, 158, 255, 0.4);
     --neon-blue: #4a9eff;
-    --neon-purple: #8c5eff;
-    --neon-pink: #ff3366;
-    --neon-cyan: #18eaea;
+    --neon-purple: #6b8cff;
+    --neon-pink: #3b7dff;
+    --neon-cyan: #4a9eff;
 }
 
 * {
@@ -2881,4 +2881,69 @@ h1, h2, h3, h4, h5, h6 {
 
 .contact-info a:hover::after {
     width: 100%;
+}
+
+/* Force override for mobile view */
+@media (max-width: 768px) {
+    section h2,
+    .section-title,
+    .professional-experience,
+    .research-publications,
+    .contact-me,
+    .publication-title,
+    .job-title {
+        color: var(--primary-color) !important;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: none !important;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .skill-item,
+    .exp-item,
+    .publication-item {
+        background: white !important;
+        border: 1px solid rgba(74, 158, 255, 0.2) !important;
+        box-shadow: 0 5px 15px rgba(74, 158, 255, 0.1) !important;
+    }
+
+    .skill-item i,
+    .skill-category,
+    .skill-tag {
+        color: var(--primary-color) !important;
+        text-shadow: none !important;
+    }
+
+    /* Override any remaining neon effects */
+    [class*="title"],
+    [class*="heading"],
+    h1, h2, h3, h4, h5, h6,
+    .skill-item *,
+    .exp-item *,
+    .publication-item * {
+        text-shadow: none !important;
+        animation: none !important;
+    }
+
+    /* Reset any neon animations */
+    * {
+        animation: none !important;
+    }
+
+    /* Add subtle gradient animation for titles */
+    .section-title,
+    .professional-experience,
+    .research-publications,
+    .contact-me {
+        background-size: 200% auto;
+        animation: gradientMove 3s linear infinite !important;
+    }
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
