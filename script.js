@@ -1,4 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Scroll Progress Bar
+    const scrollProgress = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+        const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY;
+        const progress = (scrolled / totalScroll) * 100;
+        scrollProgress.style.width = `${progress}%`;
+    });
+
     // Matrix background effect
     const matrixBg = document.querySelector('.matrix-bg');
     const numberOfColumns = Math.floor(window.innerWidth / 20); // One column every 20px
@@ -96,7 +105,23 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(item);
     });
 
-    // Enhanced scroll animations
+    // Skill icons rotation on scroll
+    const skillItems = document.querySelectorAll('.skill-item i');
+    window.addEventListener('scroll', () => {
+        skillItems.forEach(icon => {
+            const rotation = window.scrollY * 0.2;
+            icon.style.transform = `rotate(${rotation}deg)`;
+        });
+    });
+
+    // Parallax effect for hero section
+    const hero = document.querySelector('.hero');
+    window.addEventListener('scroll', () => {
+        const scroll = window.scrollY;
+        hero.style.backgroundPositionY = `${scroll * 0.5}px`;
+    });
+
+    // Animate elements on scroll
     const animateOnScroll = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -105,29 +130,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.2 });
 
-    // Animate skill items
-    document.querySelectorAll('.skill-item').forEach(item => {
-        item.style.opacity = 0;
+    // Apply animations to elements
+    document.querySelectorAll('.skill-item, .project-item, section h2, .achievement-item, .cert-item').forEach((item, index) => {
+        item.style.opacity = '0';
         item.style.transform = 'translateY(20px)';
-        animateOnScroll.observe(item);
-    });
-
-    // Animate project items with stagger
-    document.querySelectorAll('.project-item').forEach((item, index) => {
-        item.style.opacity = 0;
-        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'all 0.6s ease';
         item.style.transitionDelay = `${index * 0.1}s`;
         animateOnScroll.observe(item);
     });
 
-    // Typing effect for headings
-    document.querySelectorAll('section h2').forEach(heading => {
-        heading.style.opacity = 0;
-        heading.style.transform = 'translateY(20px)';
-        animateOnScroll.observe(heading);
-    });
-
-    // Add hover effect to tech stack items
+    // Tech stack hover effects
     document.querySelectorAll('.tech-stack span').forEach(tech => {
         tech.addEventListener('mouseover', function() {
             this.style.transform = 'translateY(-5px) rotate(5deg)';

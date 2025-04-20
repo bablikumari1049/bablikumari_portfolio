@@ -106,6 +106,38 @@ body {
     100% { box-shadow: 0 0 5px var(--glow-color) }
 }
 
+/* Additional Animations */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes slideInLeft {
+    from { transform: translateX(-100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes rotateIn {
+    from { transform: rotate(-180deg) scale(0); opacity: 0; }
+    to { transform: rotate(0) scale(1); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
 /* Hero Section */
 .hero {
     min-height: 100vh;
@@ -114,7 +146,7 @@ body {
         rgba(163, 99, 217, 0.85),
         rgba(87, 88, 187, 0.8)),
         url('https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
-    background-size: cover;
+    background-size: 400% 400%;
     background-position: center;
     background-attachment: fixed;
     position: relative;
@@ -124,6 +156,7 @@ body {
     text-align: center;
     padding: 0 1rem;
     color: white;
+    animation: gradientBG 15s ease infinite;
 }
 
 .hero::before {
@@ -150,19 +183,22 @@ body {
     overflow: hidden;
     white-space: nowrap;
     animation: typing 3.5s steps(40, end),
-               blink .75s step-end infinite;
+               blink .75s step-end infinite,
+               slideInLeft 1s ease-out;
     border-right: 3px solid var(--primary-color);
 }
 
 .tagline {
     font-size: 1.8rem;
     margin-bottom: 0.5rem;
+    animation: slideInRight 1s ease-out 0.3s backwards;
 }
 
 .subtitle {
     font-size: 1.2rem;
     opacity: 0.9;
     margin-bottom: 2rem;
+    animation: slideInRight 1s ease-out 0.6s backwards;
 }
 
 .cta-button {
@@ -219,6 +255,24 @@ section h2 {
     margin-bottom: 3rem;
     color: var(--primary-color);
     font-size: 2.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--gradient);
+    transform: translateX(-50%);
+    transition: width 0.6s ease;
+}
+
+section h2:hover::after {
+    width: 100px;
 }
 
 /* About Section */
@@ -272,7 +326,8 @@ section h2 {
     padding: 5px;
     z-index: 1;
     transform: translateZ(0); /* Force hardware acceleration */
-    animation: float 6s ease-in-out infinite;
+    animation: float 6s ease-in-out infinite,
+               bounce 3s ease-in-out infinite;
 }
 
 .profile-image img {
@@ -389,6 +444,7 @@ section h2 {
     position: relative;
     overflow: hidden;
     color: white;
+    animation: rotateIn 0.6s ease-out backwards;
 }
 
 .skill-item::before {
@@ -423,6 +479,11 @@ section h2 {
     font-size: 2rem;
     color: var(--secondary-color);
     margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.skill-item:hover i {
+    transform: scale(1.2) rotate(360deg);
 }
 
 /* Experience Section */
@@ -492,11 +553,32 @@ section h2 {
     padding: 2rem;
     border-radius: 10px;
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     color: white;
     border: 1px solid rgba(108, 92, 231, 0.2);
     overflow: hidden;
+}
+
+.project-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.project-item:hover::before {
+    transform: translateX(100%);
+}
+
+.project-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
 }
 
 .project-item::after {
@@ -508,10 +590,6 @@ section h2 {
     opacity: 0.1;
     font-size: 2rem;
     color: var(--primary-color);
-}
-
-.project-item:hover {
-    transform: translateY(-5px);
 }
 
 .tech-stack {
@@ -529,12 +607,32 @@ section h2 {
     border-radius: 20px;
     font-family: 'Courier New', monospace;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .tech-stack span:hover {
     background: var(--primary-color);
     color: white;
-    transform: translateY(-3px);
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.tech-stack span::before {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s;
+}
+
+.tech-stack span:hover::before {
+    top: -50%;
+    left: -50%;
 }
 
 /* Achievements Section */
@@ -553,6 +651,7 @@ section h2 {
     border-radius: 10px;
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);
     margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease-out backwards;
 }
 
 .achievement-item::before {
@@ -571,6 +670,11 @@ section h2 {
     transform: translateX(100%);
 }
 
+.achievement-item:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
 .cert-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -585,10 +689,12 @@ section h2 {
     border-radius: 10px;
     box-shadow: 0 2px 15px rgba(0,0,0,0.1);
     transition: transform 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
 }
 
 .cert-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
 .cert-item i {
@@ -617,6 +723,7 @@ section h2 {
     padding: 1rem;
     border-radius: 8px;
     transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
 }
 
 .contact-item:hover {
@@ -644,7 +751,7 @@ section h2 {
 .social-icon {
     color: var(--primary-color);
     font-size: 1.8rem;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
 }
@@ -664,6 +771,11 @@ section h2 {
 .social-icon:hover::before {
     top: -50%;
     left: -50%;
+}
+
+.social-icon:hover {
+    animation: bounce 1s infinite;
+    color: var(--primary-color);
 }
 
 /* Footer */
