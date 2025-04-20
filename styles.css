@@ -185,8 +185,6 @@ body {
     min-height: 100vh;
     background: linear-gradient(-45deg, #6c5ce7, #a363d9, #81ecec, #74b9ff);
     background-size: 400% 400%;
-    background-position: center;
-    background-attachment: fixed;
     position: relative;
     display: flex;
     align-items: center;
@@ -194,7 +192,6 @@ body {
     text-align: center;
     padding: 0 1rem;
     color: white;
-    animation: gradientFlow 15s ease infinite;
     overflow: hidden;
 }
 
@@ -1604,36 +1601,45 @@ a:hover {
         transform: translateY(-100%);
         opacity: 0;
     }
-    50% {
-        opacity: 0.3;
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
     }
     100% {
-        transform: translateY(100%);
+        transform: translateY(100vh);
         opacity: 0;
     }
 }
 
 @keyframes circuitPulse {
     0% {
-        opacity: 0.1;
+        box-shadow: 0 0 5px rgba(108, 92, 231, 0.2);
         transform: scale(1);
     }
     50% {
-        opacity: 0.3;
-        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(108, 92, 231, 0.4);
+        transform: scale(1.1);
     }
     100% {
-        opacity: 0.1;
+        box-shadow: 0 0 5px rgba(108, 92, 231, 0.2);
         transform: scale(1);
     }
 }
 
 @keyframes dataFlow {
     0% {
-        transform: translateX(-100%);
+        transform: translateX(-100%) scaleX(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translateX(0%) scaleX(1);
+        opacity: 1;
     }
     100% {
-        transform: translateX(100%);
+        transform: translateX(100%) scaleX(0);
+        opacity: 0;
     }
 }
 
@@ -1665,12 +1671,13 @@ a:hover {
 
 .binary-column {
     position: absolute;
-    color: rgba(108, 92, 231, 0.2);
+    color: rgba(255, 255, 255, 0.15);
     font-family: 'Courier New', monospace;
     font-size: 14px;
     line-height: 1;
     animation: binaryRain 8s linear infinite;
     white-space: nowrap;
+    text-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
 }
 
 .circuit-path {
@@ -1678,11 +1685,10 @@ a:hover {
     height: 2px;
     background: linear-gradient(90deg, 
         transparent,
-        var(--primary-color),
+        rgba(108, 92, 231, 0.3),
         transparent
     );
     animation: dataFlow 3s linear infinite;
-    opacity: 0.2;
 }
 
 /* Update hero section */
@@ -1705,14 +1711,15 @@ a:hover {
     height: 100%;
     pointer-events: none;
     z-index: 1;
+    overflow: hidden;
 }
 
 .chip-icon {
     position: absolute;
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border: 2px solid rgba(108, 92, 231, 0.2);
-    border-radius: 6px;
+    border-radius: 4px;
     animation: circuitPulse 4s infinite;
 }
 
@@ -1725,17 +1732,17 @@ a:hover {
 
 .chip-icon::before {
     top: 50%;
-    left: -20px;
-    width: 20px;
+    left: -15px;
+    width: 15px;
     height: 2px;
     transform: translateY(-50%);
 }
 
 .chip-icon::after {
     left: 50%;
-    top: -20px;
+    top: -15px;
     width: 2px;
-    height: 20px;
+    height: 15px;
     transform: translateX(-50%);
 }
 
@@ -1744,16 +1751,23 @@ a:hover {
     position: absolute;
     font-family: 'Courier New', monospace;
     font-size: 12px;
-    color: rgba(108, 92, 231, 0.3);
-    padding: 10px;
+    color: rgba(255, 255, 255, 0.2);
+    padding: 8px;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    animation: fadeInOut 4s infinite;
+    background: rgba(108, 92, 231, 0.1);
+    animation: fadeInOut 4s ease-in-out infinite;
+    text-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
 }
 
 @keyframes fadeInOut {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 0.3; }
+    0%, 100% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(0);
+    }
 }
 
 /* Update profile image container for firmware theme */

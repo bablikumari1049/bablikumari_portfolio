@@ -323,6 +323,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Firmware Animation Setup
     function initFirmwareAnimations() {
         const hero = document.querySelector('.hero');
+        
+        // Clear existing firmware elements if any
+        const existingElements = hero.querySelector('.firmware-elements');
+        if (existingElements) {
+            existingElements.remove();
+        }
+        
         const firmwareElements = document.createElement('div');
         firmwareElements.className = 'firmware-elements';
         hero.appendChild(firmwareElements);
@@ -380,7 +387,15 @@ document.addEventListener('DOMContentLoaded', () => {
             '}'
         ];
 
-        setInterval(() => {
+        // Create and add initial code snippets
+        for (let i = 0; i < 3; i++) {
+            createCodeSnippet();
+        }
+
+        // Continue adding snippets periodically
+        setInterval(createCodeSnippet, 2000);
+
+        function createCodeSnippet() {
             const snippet = document.createElement('div');
             snippet.className = 'code-snippet';
             snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
@@ -392,13 +407,18 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 snippet.remove();
             }, 4000);
-        }, 2000);
+        }
     }
 
     function generateBinaryString() {
         return Array.from({length: 20}, () => Math.random() > 0.5 ? '1' : '0').join('');
     }
 
-    // Initialize firmware animations when DOM is loaded
+    // Initialize firmware animations immediately
     initFirmwareAnimations();
+
+    // Refresh animations periodically to keep them dynamic
+    setInterval(() => {
+        initFirmwareAnimations();
+    }, 30000); // Refresh every 30 seconds
 }); 
