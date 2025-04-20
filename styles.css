@@ -1,12 +1,13 @@
 :root {
-    --primary-color: #4834d4;
-    --secondary-color: #686de0;
-    --accent-color: #ff7675;
+    --primary-color: #00ff9d;
+    --secondary-color: #00b8ff;
+    --accent-color: #ff3366;
     --text-color: #2d3436;
     --light-bg: #f5f6fa;
-    --gradient: linear-gradient(135deg, #6c5ce7, #a363d9);
-    --code-bg: #282a36;
-    --glow-color: rgba(108, 92, 231, 0.3);
+    --gradient: linear-gradient(135deg, #00ff9d, #00b8ff);
+    --code-bg: #1a1f3c;
+    --glow-color: rgba(0, 255, 157, 0.3);
+    --circuit-color: rgba(0, 255, 157, 0.4);
 }
 
 * {
@@ -183,7 +184,7 @@ body {
 /* Hero Section */
 .hero {
     min-height: 100vh;
-    background: linear-gradient(-45deg, #6c5ce7, #a363d9, #81ecec, #74b9ff);
+    background: linear-gradient(-45deg, #1a1f3c, #2a3050, #1a1f3c, #2a3050);
     background-size: 400% 400%;
     position: relative;
     display: flex;
@@ -193,6 +194,7 @@ body {
     padding: 0 1rem;
     color: white;
     overflow: hidden;
+    animation: gradientBG 15s ease infinite;
 }
 
 .hero::before {
@@ -217,7 +219,7 @@ body {
     margin-bottom: 1rem;
     opacity: 0;
     animation: fadeInUp 1s ease forwards;
-    background: linear-gradient(45deg, #6c5ce7, #a363d9);
+    background: linear-gradient(45deg, #00ff9d, #00b8ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     position: relative;
@@ -351,7 +353,7 @@ section h2:hover::after {
     border: 5px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
     position: relative;
-    background: linear-gradient(45deg, #6c5ce7, #a363d9);
+    background: linear-gradient(45deg, #00ff9d, #00b8ff);
     padding: 5px;
     z-index: 1;
     transform: translateZ(0); /* Force hardware acceleration */
@@ -377,14 +379,25 @@ section h2:hover::after {
 .profile-image::before {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #6c5ce7, #a363d9, #ff7675);
-    z-index: -1;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border: 2px solid var(--primary-color);
     border-radius: 50%;
-    animation: borderGlow 3s ease-in-out infinite;
+    animation: profileGlow 3s ease-in-out infinite;
+    z-index: -1;
+}
+
+@keyframes profileGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px var(--primary-color);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 40px var(--primary-color);
+        transform: scale(1.05);
+    }
 }
 
 /* About Grid Layout */
@@ -404,7 +417,7 @@ section h2:hover::after {
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     position: relative;
-    background: linear-gradient(45deg, #6c5ce7, #a363d9);
+    background: linear-gradient(45deg, #00ff9d, #00b8ff);
     padding: 5px;
     z-index: 1;
     transform: translateZ(0); /* Force hardware acceleration */
@@ -1671,13 +1684,14 @@ a:hover {
 
 .binary-column {
     position: absolute;
-    color: rgba(255, 255, 255, 0.15);
+    color: var(--primary-color);
     font-family: 'Courier New', monospace;
     font-size: 14px;
     line-height: 1;
     animation: binaryRain 8s linear infinite;
     white-space: nowrap;
-    text-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
+    text-shadow: 0 0 5px var(--primary-color);
+    opacity: 0.3;
 }
 
 .circuit-path {
@@ -1685,10 +1699,11 @@ a:hover {
     height: 2px;
     background: linear-gradient(90deg, 
         transparent,
-        rgba(108, 92, 231, 0.3),
+        var(--primary-color),
         transparent
     );
     animation: dataFlow 3s linear infinite;
+    box-shadow: 0 0 10px var(--primary-color);
 }
 
 /* Update hero section */
@@ -1716,18 +1731,20 @@ a:hover {
 
 .chip-icon {
     position: absolute;
-    width: 30px;
-    height: 30px;
-    border: 2px solid rgba(108, 92, 231, 0.2);
-    border-radius: 4px;
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
     animation: circuitPulse 4s infinite;
+    box-shadow: 0 0 15px var(--primary-color);
 }
 
 .chip-icon::before,
 .chip-icon::after {
     content: '';
     position: absolute;
-    background: rgba(108, 92, 231, 0.2);
+    background: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
 }
 
 .chip-icon::before {
@@ -1751,12 +1768,14 @@ a:hover {
     position: absolute;
     font-family: 'Courier New', monospace;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.2);
-    padding: 8px;
+    color: var(--primary-color);
+    padding: 10px;
     border-radius: 4px;
-    background: rgba(108, 92, 231, 0.1);
+    background: rgba(26, 31, 60, 0.8);
     animation: fadeInOut 4s ease-in-out infinite;
-    text-shadow: 0 0 5px rgba(108, 92, 231, 0.5);
+    text-shadow: 0 0 5px var(--primary-color);
+    border: 1px solid var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
 }
 
 @keyframes fadeInOut {
@@ -1798,4 +1817,63 @@ a:hover {
     opacity: 0.2;
     pointer-events: none;
     z-index: 1;
+}
+
+/* New PCB trace animations */
+.pcb-trace {
+    position: absolute;
+    background: var(--primary-color);
+    opacity: 0.4;
+}
+
+.pcb-trace.horizontal {
+    height: 1px;
+    width: 100px;
+    animation: traceFlowHorizontal 3s linear infinite;
+}
+
+.pcb-trace.vertical {
+    width: 1px;
+    height: 100px;
+    animation: traceFlowVertical 3s linear infinite;
+}
+
+/* New LED indicators */
+.led-indicator {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    animation: ledBlink 2s ease-in-out infinite;
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+/* Enhanced animations */
+@keyframes circuitGlow {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.2; }
+}
+
+@keyframes ledBlink {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 0.5;
+    }
+    50% { 
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes traceFlowHorizontal {
+    0% { transform: translateX(-100%) scaleX(0); }
+    50% { transform: translateX(0) scaleX(1); }
+    100% { transform: translateX(100%) scaleX(0); }
+}
+
+@keyframes traceFlowVertical {
+    0% { transform: translateY(-100%) scaleY(0); }
+    50% { transform: translateY(0) scaleY(1); }
+    100% { transform: translateY(100%) scaleY(0); }
 } 

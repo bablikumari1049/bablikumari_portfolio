@@ -334,10 +334,10 @@ document.addEventListener('DOMContentLoaded', () => {
         firmwareElements.className = 'firmware-elements';
         hero.appendChild(firmwareElements);
 
-        // Add circuit overlay
-        const circuitOverlay = document.createElement('div');
-        circuitOverlay.className = 'circuit-overlay';
-        firmwareElements.appendChild(circuitOverlay);
+        // Add circuit board background
+        const circuitBoard = document.createElement('div');
+        circuitBoard.className = 'circuit-board';
+        firmwareElements.appendChild(circuitBoard);
 
         // Add binary rain
         const binaryRain = document.createElement('div');
@@ -354,36 +354,67 @@ document.addEventListener('DOMContentLoaded', () => {
             binaryRain.appendChild(column);
         }
 
-        // Add circuit paths
-        for (let i = 0; i < 10; i++) {
-            const path = document.createElement('div');
-            path.className = 'circuit-path';
-            path.style.top = `${Math.random() * 100}%`;
-            path.style.width = `${Math.random() * 100 + 50}px`;
-            path.style.animationDelay = `${Math.random() * 3}s`;
-            firmwareElements.appendChild(path);
+        // Add PCB traces
+        const tracePositions = [20, 40, 60, 80];
+        tracePositions.forEach(pos => {
+            // Horizontal traces
+            const hTrace = document.createElement('div');
+            hTrace.className = 'pcb-trace horizontal';
+            hTrace.style.top = `${pos}%`;
+            hTrace.style.left = `${Math.random() * 50}%`;
+            hTrace.style.animationDelay = `${Math.random() * 3}s`;
+            firmwareElements.appendChild(hTrace);
+
+            // Vertical traces
+            const vTrace = document.createElement('div');
+            vTrace.className = 'pcb-trace vertical';
+            vTrace.style.left = `${pos}%`;
+            vTrace.style.top = `${Math.random() * 50}%`;
+            vTrace.style.animationDelay = `${Math.random() * 3}s`;
+            firmwareElements.appendChild(vTrace);
+        });
+
+        // Add LED indicators
+        for (let i = 0; i < 8; i++) {
+            const led = document.createElement('div');
+            led.className = 'led-indicator';
+            led.style.left = `${Math.random() * 90 + 5}%`;
+            led.style.top = `${Math.random() * 90 + 5}%`;
+            led.style.animationDelay = `${Math.random() * 2}s`;
+            firmwareElements.appendChild(led);
         }
 
-        // Add chip icons
-        for (let i = 0; i < 5; i++) {
+        // Add chip icons with enhanced positioning
+        const chipPositions = [
+            { x: 15, y: 20 }, { x: 75, y: 30 },
+            { x: 25, y: 70 }, { x: 85, y: 60 },
+            { x: 45, y: 45 }
+        ];
+
+        chipPositions.forEach(pos => {
             const chip = document.createElement('div');
             chip.className = 'chip-icon';
-            chip.style.left = `${Math.random() * 90 + 5}%`;
-            chip.style.top = `${Math.random() * 90 + 5}%`;
+            chip.style.left = `${pos.x}%`;
+            chip.style.top = `${pos.y}%`;
             chip.style.animationDelay = `${Math.random() * 4}s`;
             firmwareElements.appendChild(chip);
-        }
+        });
 
-        // Add firmware code snippets
+        // Enhanced firmware code snippets
         const codeSnippets = [
             '#include <firmware.h>',
             'void setup() {',
             'GPIO_Init();',
             'SPI_Config();',
+            'I2C_Init();',
+            'ADC_Setup();',
+            'PWM_Config();',
+            'UART_Begin();',
             'while(1) {',
-            'ADC_Read();',
-            'PWM_Update();',
-            'UART_Send();',
+            'ReadSensors();',
+            'ProcessData();',
+            'UpdateOutputs();',
+            'WDT_Reset();',
             '}'
         ];
 
