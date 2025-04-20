@@ -1,4 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Matrix background effect
+    const matrixBg = document.querySelector('.matrix-bg');
+    const numberOfColumns = Math.floor(window.innerWidth / 20); // One column every 20px
+
+    for (let i = 0; i < numberOfColumns; i++) {
+        const column = document.createElement('div');
+        column.className = 'matrix-column';
+        column.style.left = `${i * 20}px`;
+        column.style.animationDelay = `${Math.random() * 8}s`;
+        matrixBg.appendChild(column);
+    }
+
     // Navigation elements
     const navbar = document.querySelector('.navbar');
     const navLinks = document.querySelector('.nav-links');
@@ -84,36 +96,69 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(item);
     });
 
-    // Add animation to skill items when they come into view
-    const skillItems = document.querySelectorAll('.skill-item');
-    const observerSkill = new IntersectionObserver((entries) => {
+    // Enhanced scroll animations
+    const animateOnScroll = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = 1;
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.add('animate');
             }
         });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.2 });
 
-    skillItems.forEach(item => {
+    // Animate skill items
+    document.querySelectorAll('.skill-item').forEach(item => {
         item.style.opacity = 0;
         item.style.transform = 'translateY(20px)';
-        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observerSkill.observe(item);
+        animateOnScroll.observe(item);
+    });
+
+    // Animate project items with stagger
+    document.querySelectorAll('.project-item').forEach((item, index) => {
+        item.style.opacity = 0;
+        item.style.transform = 'translateY(20px)';
+        item.style.transitionDelay = `${index * 0.1}s`;
+        animateOnScroll.observe(item);
+    });
+
+    // Typing effect for headings
+    document.querySelectorAll('section h2').forEach(heading => {
+        heading.style.opacity = 0;
+        heading.style.transform = 'translateY(20px)';
+        animateOnScroll.observe(heading);
+    });
+
+    // Add hover effect to tech stack items
+    document.querySelectorAll('.tech-stack span').forEach(tech => {
+        tech.addEventListener('mouseover', function() {
+            this.style.transform = 'translateY(-5px) rotate(5deg)';
+        });
+        tech.addEventListener('mouseout', function() {
+            this.style.transform = 'translateY(0) rotate(0)';
+        });
+    });
+
+    // Particle effect for hero section
+    const createParticle = (x, y) => {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        document.body.appendChild(particle);
+        
+        setTimeout(() => {
+            particle.remove();
+        }, 1000);
+    };
+
+    document.querySelector('.hero').addEventListener('mousemove', (e) => {
+        if (Math.random() > 0.9) {
+            createParticle(e.clientX, e.clientY);
+        }
     });
 
     // Add animation to education items
     const eduItems = document.querySelectorAll('.edu-item');
     eduItems.forEach(item => {
-        item.style.opacity = 0;
-        item.style.transform = 'translateY(20px)';
-        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observerSkill.observe(item);
-    });
-
-    // Add animation to project items
-    const projectItems = document.querySelectorAll('.project-item');
-    projectItems.forEach(item => {
         item.style.opacity = 0;
         item.style.transform = 'translateY(20px)';
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
