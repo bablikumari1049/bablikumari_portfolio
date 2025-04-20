@@ -208,20 +208,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const createParticle = (x, y) => {
         const particle = document.createElement('div');
         particle.className = 'particle';
-        particle.style.left = x + 'px';
-        particle.style.top = y + 'px';
-        document.body.appendChild(particle);
         
+        // Random size between 3 and 7 pixels
+        const size = Math.random() * 4 + 3;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Set starting position
+        particle.style.left = `${x}px`;
+        particle.style.top = `${y}px`;
+        
+        // Random direction
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = Math.random() * 100 + 50;
+        const tx = Math.cos(angle) * velocity;
+        const ty = Math.sin(angle) * velocity;
+        
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        
+        hero.appendChild(particle);
+        
+        // Remove particle after animation
         setTimeout(() => {
             particle.remove();
         }, 1000);
     };
 
-    document.querySelector('.hero').addEventListener('mousemove', (e) => {
-        if (Math.random() > 0.9) {
+    // Create particles on mouse move
+    hero.addEventListener('mousemove', (e) => {
+        if (Math.random() > 0.9) { // Control particle density
             createParticle(e.clientX, e.clientY);
         }
     });
+
+    // Create random particles periodically
+    setInterval(() => {
+        const x = Math.random() * window.innerWidth;
+        const y = Math.random() * window.innerHeight * 0.8;
+        if (Math.random() > 0.9) {
+            createParticle(x, y);
+        }
+    }, 200);
 
     // Add animation to education items
     const eduItems = document.querySelectorAll('.edu-item');
