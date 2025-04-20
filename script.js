@@ -339,29 +339,31 @@ document.addEventListener('DOMContentLoaded', () => {
         circuitBoard.className = 'circuit-board';
         firmwareElements.appendChild(circuitBoard);
 
-        // Add binary rain
+        // Add binary rain with enhanced colors
         const binaryRain = document.createElement('div');
         binaryRain.className = 'binary-rain';
         firmwareElements.appendChild(binaryRain);
 
-        // Create binary columns
-        for (let i = 0; i < 20; i++) {
+        // Create binary columns with varied colors
+        for (let i = 0; i < 25; i++) {
             const column = document.createElement('div');
             column.className = 'binary-column';
             column.style.left = `${Math.random() * 100}%`;
             column.style.animationDelay = `${Math.random() * 8}s`;
+            column.style.animationDuration = `${Math.random() * 4 + 6}s`; // Varied speeds
             column.textContent = generateBinaryString();
             binaryRain.appendChild(column);
         }
 
-        // Add PCB traces
-        const tracePositions = [20, 40, 60, 80];
-        tracePositions.forEach(pos => {
+        // Add PCB traces with enhanced effects
+        const tracePositions = [15, 35, 55, 75, 85];
+        tracePositions.forEach((pos, index) => {
             // Horizontal traces
             const hTrace = document.createElement('div');
             hTrace.className = 'pcb-trace horizontal';
             hTrace.style.top = `${pos}%`;
             hTrace.style.left = `${Math.random() * 50}%`;
+            hTrace.style.width = `${Math.random() * 100 + 50}px`;
             hTrace.style.animationDelay = `${Math.random() * 3}s`;
             firmwareElements.appendChild(hTrace);
 
@@ -370,12 +372,13 @@ document.addEventListener('DOMContentLoaded', () => {
             vTrace.className = 'pcb-trace vertical';
             vTrace.style.left = `${pos}%`;
             vTrace.style.top = `${Math.random() * 50}%`;
+            vTrace.style.height = `${Math.random() * 100 + 50}px`;
             vTrace.style.animationDelay = `${Math.random() * 3}s`;
             firmwareElements.appendChild(vTrace);
         });
 
-        // Add LED indicators
-        for (let i = 0; i < 8; i++) {
+        // Add LED indicators with varied colors
+        for (let i = 0; i < 12; i++) {
             const led = document.createElement('div');
             led.className = 'led-indicator';
             led.style.left = `${Math.random() * 90 + 5}%`;
@@ -383,22 +386,6 @@ document.addEventListener('DOMContentLoaded', () => {
             led.style.animationDelay = `${Math.random() * 2}s`;
             firmwareElements.appendChild(led);
         }
-
-        // Add chip icons with enhanced positioning
-        const chipPositions = [
-            { x: 15, y: 20 }, { x: 75, y: 30 },
-            { x: 25, y: 70 }, { x: 85, y: 60 },
-            { x: 45, y: 45 }
-        ];
-
-        chipPositions.forEach(pos => {
-            const chip = document.createElement('div');
-            chip.className = 'chip-icon';
-            chip.style.left = `${pos.x}%`;
-            chip.style.top = `${pos.y}%`;
-            chip.style.animationDelay = `${Math.random() * 4}s`;
-            firmwareElements.appendChild(chip);
-        });
 
         // Enhanced firmware code snippets
         const codeSnippets = [
@@ -415,16 +402,21 @@ document.addEventListener('DOMContentLoaded', () => {
             'ProcessData();',
             'UpdateOutputs();',
             'WDT_Reset();',
-            '}'
+            '}',
+            'ISR(TIMER0_OVF_vect) {',
+            'uint16_t adc_val;',
+            'DMA_Transfer();',
+            'PORTB ^= _BV(LED);'
         ];
 
         // Create and add initial code snippets
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             createCodeSnippet();
         }
 
-        // Continue adding snippets periodically
+        // Continue adding snippets periodically with varied timing
         setInterval(createCodeSnippet, 2000);
+        setTimeout(() => setInterval(createCodeSnippet, 2500), 1000);
 
         function createCodeSnippet() {
             const snippet = document.createElement('div');
@@ -432,6 +424,7 @@ document.addEventListener('DOMContentLoaded', () => {
             snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
             snippet.style.left = `${Math.random() * 80 + 10}%`;
             snippet.style.top = `${Math.random() * 80 + 10}%`;
+            snippet.style.transform = `rotate(${Math.random() * 6 - 3}deg)`;
             firmwareElements.appendChild(snippet);
 
             // Remove snippet after animation
@@ -439,6 +432,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 snippet.remove();
             }, 4000);
         }
+
+        // Add particle effects
+        setInterval(() => {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.setProperty('--tx', `${Math.random() * 200 - 100}px`);
+            particle.style.setProperty('--ty', `${Math.random() * 200 - 100}px`);
+            firmwareElements.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
+        }, 200);
     }
 
     function generateBinaryString() {
@@ -452,4 +460,194 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         initFirmwareAnimations();
     }, 30000); // Refresh every 30 seconds
+
+    // Add chip decorations
+    function createChipDecorations() {
+        const hero = document.querySelector('.hero');
+        const chipConfigs = [
+            {
+                position: { left: '15%', top: '25%' },
+                label: 'CPU: Neural Net'
+            },
+            {
+                position: { right: '20%', top: '35%' },
+                label: 'Memory: Deep Learning'
+            },
+            {
+                position: { left: '25%', bottom: '30%' },
+                label: 'GPU: AI Processing'
+            },
+            {
+                position: { right: '15%', bottom: '40%' },
+                label: 'Data: ML Models'
+            }
+        ];
+
+        chipConfigs.forEach((config, index) => {
+            const chip = document.createElement('div');
+            chip.className = 'chip-decoration';
+            Object.assign(chip.style, config.position);
+            chip.style.animationDelay = `${index * 1.2}s`;
+
+            // Create pins container
+            const pins = document.createElement('div');
+            pins.className = 'pins';
+
+            // Add horizontal pins
+            for (let i = 0; i < 6; i++) {
+                const pin = document.createElement('div');
+                pin.className = 'pin horizontal';
+                pin.style.left = i < 3 ? '-12px' : '100%';
+                pin.style.top = `${(i % 3) * 40 + 20}%`;
+                pins.appendChild(pin);
+            }
+
+            // Add vertical pins
+            for (let i = 0; i < 6; i++) {
+                const pin = document.createElement('div');
+                pin.className = 'pin vertical';
+                pin.style.top = i < 3 ? '-12px' : '100%';
+                pin.style.left = `${(i % 3) * 40 + 20}%`;
+                pins.appendChild(pin);
+            }
+
+            // Create inner grid
+            const innerGrid = document.createElement('div');
+            innerGrid.className = 'chip-inner-grid';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('div');
+                cell.style.animationDelay = `${Math.random() * 3}s`;
+                innerGrid.appendChild(cell);
+            }
+
+            // Add label
+            const label = document.createElement('div');
+            label.className = 'chip-label';
+            label.textContent = config.label;
+
+            chip.appendChild(pins);
+            chip.appendChild(innerGrid);
+            chip.appendChild(label);
+            hero.appendChild(chip);
+        });
+    }
+
+    // Initialize chip decorations
+    createChipDecorations();
+
+    // Add computer animations to About section
+    function createComputerAnimations() {
+        const about = document.querySelector('.about');
+        
+        // Remove any existing computer animations
+        const existingAnimation = about.querySelector('.computer-animation');
+        if (existingAnimation) {
+            existingAnimation.remove();
+        }
+
+        const computerAnimation = document.createElement('div');
+        computerAnimation.className = 'computer-animation';
+
+        // Create monitor
+        const monitor = document.createElement('div');
+        monitor.className = 'monitor';
+        monitor.style.right = '15%';
+        monitor.style.top = '20%';
+
+        const monitorScreen = document.createElement('div');
+        monitorScreen.className = 'monitor-screen';
+        monitor.appendChild(monitorScreen);
+
+        // Add code lines to monitor
+        const codeSnippets = [
+            'class Developer {',
+            '  constructor() {',
+            '    this.name = "Babli";',
+            '    this.role = "ML Engineer";',
+            '  }',
+            '}',
+            'const skills = ["AI", "ML"];',
+            'while(true) {',
+            '  code.write();',
+            '  coffee.drink();',
+            '}'
+        ];
+
+        codeSnippets.forEach((snippet, index) => {
+            const codeLine = document.createElement('div');
+            codeLine.className = 'code-line';
+            codeLine.textContent = snippet;
+            codeLine.style.top = `${index * 20}px`;
+            codeLine.style.animationDelay = `${index * 0.5}s`;
+            monitorScreen.appendChild(codeLine);
+        });
+
+        // Create keyboard
+        const keyboard = document.createElement('div');
+        keyboard.className = 'keyboard';
+        keyboard.style.right = '17%';
+        keyboard.style.top = '50%';
+
+        // Create mouse
+        const mouse = document.createElement('div');
+        mouse.className = 'mouse';
+        mouse.style.right = '8%';
+        mouse.style.top = '50%';
+
+        // Create floating code window
+        const codeWindow = document.createElement('div');
+        codeWindow.className = 'code-window';
+        codeWindow.style.left = '15%';
+        codeWindow.style.top = '30%';
+
+        // Add window header
+        const header = document.createElement('div');
+        header.className = 'code-header';
+        
+        const dots = document.createElement('div');
+        dots.className = 'window-dots';
+        for (let i = 0; i < 3; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'window-dot';
+            dots.appendChild(dot);
+        }
+        header.appendChild(dots);
+
+        // Add window content
+        const content = document.createElement('div');
+        content.className = 'code-content';
+        content.innerHTML = `
+            import tensorflow as tf<br>
+            import numpy as np<br><br>
+            def train_model():<br>
+            &nbsp;&nbsp;model = tf.keras.Sequential()<br>
+            &nbsp;&nbsp;model.compile()<br>
+            <span class="typing-line"></span>
+        `;
+
+        codeWindow.appendChild(header);
+        codeWindow.appendChild(content);
+
+        // Add all elements to the animation container
+        computerAnimation.appendChild(monitor);
+        computerAnimation.appendChild(keyboard);
+        computerAnimation.appendChild(mouse);
+        computerAnimation.appendChild(codeWindow);
+
+        // Add animation container to about section
+        about.appendChild(computerAnimation);
+    }
+
+    // Initialize computer animations when the about section is visible
+    const aboutSection = document.querySelector('.about');
+    const computerAnimationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                createComputerAnimations();
+                computerAnimationObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    computerAnimationObserver.observe(aboutSection);
 }); 
