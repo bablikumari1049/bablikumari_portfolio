@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Close mobile menu if open
             navLinks.classList.remove('active');
+            mobileNavToggle.classList.remove('active');
             document.body.style.overflow = '';
         });
     });
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Mobile Navigation Toggle
     if (mobileNavToggle) {
         mobileNavToggle.addEventListener('click', () => {
+            mobileNavToggle.classList.toggle('active');
             navLinks.classList.toggle('active');
             document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
         });
@@ -52,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             !navLinks.contains(e.target) && 
             !mobileNavToggle.contains(e.target)) {
             navLinks.classList.remove('active');
+            mobileNavToggle.classList.remove('active');
             document.body.style.overflow = '';
         }
     });
