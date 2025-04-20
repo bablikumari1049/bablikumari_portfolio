@@ -1,76 +1,89 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Smooth scrolling for all navigation links and CTA button
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            
-            if (targetElement) {
-                const headerOffset = 80; // Adjust this value based on your navbar height
-                const elementPosition = targetElement.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+document.addEventListener('DOMContentLoaded', () => {
+    // Navigation elements
+    const navbar = document.querySelector('.navbar');
+    const navLinks = document.querySelector('.nav-links');
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const sections = document.querySelectorAll('section');
 
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
+    // Scroll handling for navbar
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.style.backgroundColor = '#fff';
+            navbar.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+        } else {
+            navbar.style.backgroundColor = 'transparent';
+            navbar.style.boxShadow = 'none';
+        }
+    });
+
+    // Smooth scrolling for navigation links
+    navLinksItems.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            const targetSection = document.querySelector(targetId);
+            const headerOffset = 80;
+            const elementPosition = targetSection.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
+            // Close mobile menu if open
+            navLinks.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Mobile Navigation Toggle
+    if (mobileNavToggle) {
+        mobileNavToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+        });
+    }
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (navLinks.classList.contains('active') && 
+            !navLinks.contains(e.target) && 
+            !mobileNavToggle.contains(e.target)) {
+            navLinks.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Active section highlighting
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.7
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+                navLinksItems.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${id}`) {
+                        link.classList.add('active');
+                    }
                 });
             }
         });
-    });
+    }, observerOptions);
 
-    // Navbar scroll effect
-    const navbar = document.querySelector('.navbar');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
-
-        if (currentScroll <= 0) {
-            navbar.style.backgroundColor = 'white';
-            navbar.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-            return;
-        }
-
-        if (currentScroll > lastScroll) {
-            // Scrolling down
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            // Scrolling up
-            navbar.style.transform = 'translateY(0)';
-            navbar.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
-            navbar.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-        }
-
-        lastScroll = currentScroll;
-    });
-
-    // Add active state to navigation links
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    window.addEventListener('scroll', () => {
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (window.pageYOffset >= sectionTop - 150) {
-                current = section.getAttribute('id');
-            }
-        });
-
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').slice(1) === current) {
-                link.classList.add('active');
-            }
-        });
+    sections.forEach(item => {
+        observer.observe(item);
     });
 
     // Add animation to skill items when they come into view
     const skillItems = document.querySelectorAll('.skill-item');
-    const observer = new IntersectionObserver((entries) => {
+    const observerSkill = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.style.opacity = 1;
@@ -83,7 +96,7 @@ document.addEventListener('DOMContentLoaded', function() {
         item.style.opacity = 0;
         item.style.transform = 'translateY(20px)';
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observer.observe(item);
+        observerSkill.observe(item);
     });
 
     // Add animation to education items
@@ -92,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         item.style.opacity = 0;
         item.style.transform = 'translateY(20px)';
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observer.observe(item);
+        observerSkill.observe(item);
     });
 
     // Add animation to project items
@@ -101,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
         item.style.opacity = 0;
         item.style.transform = 'translateY(20px)';
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observer.observe(item);
+        observerSkill.observe(item);
     });
 
     // Add animation to achievement items
@@ -110,6 +123,6 @@ document.addEventListener('DOMContentLoaded', function() {
         item.style.opacity = 0;
         item.style.transform = 'translateY(20px)';
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        observer.observe(item);
+        observerSkill.observe(item);
     });
 }); 
