@@ -268,4 +268,137 @@ document.addEventListener('DOMContentLoaded', () => {
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observerSkill.observe(item);
     });
+
+    // Tech Animation Setup
+    const createCircuitLines = () => {
+        const circuitContainer = document.querySelector('.circuit-lines');
+        for (let i = 0; i < 5; i++) {
+            const line = document.createElement('div');
+            line.className = 'circuit-line';
+            line.style.top = `${Math.random() * 100}%`;
+            line.style.animationDelay = `${Math.random() * 4}s`;
+            circuitContainer.appendChild(line);
+        }
+    };
+
+    const codeSnippets = [
+        '#include <firmware.h>',
+        'void setup() {',
+        'int main(void) {',
+        'GPIO_Init();',
+        'while(1) {',
+        'SPI_Transfer();',
+        'ADC_Read();',
+        'PWM_Update();',
+        '}'
+    ];
+
+    const createCodeElements = () => {
+        const codeContainer = document.querySelector('.code-elements');
+        setInterval(() => {
+            const code = document.createElement('div');
+            code.className = 'code-element';
+            code.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+            code.style.left = `${Math.random() * 100}%`;
+            code.style.top = `${Math.random() * 100}%`;
+            code.style.opacity = 0;
+            codeContainer.appendChild(code);
+
+            // Fade in
+            requestAnimationFrame(() => {
+                code.style.opacity = 0.3;
+            });
+
+            // Remove after animation
+            setTimeout(() => {
+                code.remove();
+            }, 4000);
+        }, 2000);
+    };
+
+    // Initialize tech animations
+    createCircuitLines();
+    createCodeElements();
+
+    // Firmware Animation Setup
+    function initFirmwareAnimations() {
+        const hero = document.querySelector('.hero');
+        const firmwareElements = document.createElement('div');
+        firmwareElements.className = 'firmware-elements';
+        hero.appendChild(firmwareElements);
+
+        // Add circuit overlay
+        const circuitOverlay = document.createElement('div');
+        circuitOverlay.className = 'circuit-overlay';
+        firmwareElements.appendChild(circuitOverlay);
+
+        // Add binary rain
+        const binaryRain = document.createElement('div');
+        binaryRain.className = 'binary-rain';
+        firmwareElements.appendChild(binaryRain);
+
+        // Create binary columns
+        for (let i = 0; i < 20; i++) {
+            const column = document.createElement('div');
+            column.className = 'binary-column';
+            column.style.left = `${Math.random() * 100}%`;
+            column.style.animationDelay = `${Math.random() * 8}s`;
+            column.textContent = generateBinaryString();
+            binaryRain.appendChild(column);
+        }
+
+        // Add circuit paths
+        for (let i = 0; i < 10; i++) {
+            const path = document.createElement('div');
+            path.className = 'circuit-path';
+            path.style.top = `${Math.random() * 100}%`;
+            path.style.width = `${Math.random() * 100 + 50}px`;
+            path.style.animationDelay = `${Math.random() * 3}s`;
+            firmwareElements.appendChild(path);
+        }
+
+        // Add chip icons
+        for (let i = 0; i < 5; i++) {
+            const chip = document.createElement('div');
+            chip.className = 'chip-icon';
+            chip.style.left = `${Math.random() * 90 + 5}%`;
+            chip.style.top = `${Math.random() * 90 + 5}%`;
+            chip.style.animationDelay = `${Math.random() * 4}s`;
+            firmwareElements.appendChild(chip);
+        }
+
+        // Add firmware code snippets
+        const codeSnippets = [
+            '#include <firmware.h>',
+            'void setup() {',
+            'GPIO_Init();',
+            'SPI_Config();',
+            'while(1) {',
+            'ADC_Read();',
+            'PWM_Update();',
+            'UART_Send();',
+            '}'
+        ];
+
+        setInterval(() => {
+            const snippet = document.createElement('div');
+            snippet.className = 'code-snippet';
+            snippet.textContent = codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
+            snippet.style.left = `${Math.random() * 80 + 10}%`;
+            snippet.style.top = `${Math.random() * 80 + 10}%`;
+            firmwareElements.appendChild(snippet);
+
+            // Remove snippet after animation
+            setTimeout(() => {
+                snippet.remove();
+            }, 4000);
+        }, 2000);
+    }
+
+    function generateBinaryString() {
+        return Array.from({length: 20}, () => Math.random() > 0.5 ? '1' : '0').join('');
+    }
+
+    // Initialize firmware animations when DOM is loaded
+    initFirmwareAnimations();
 }); 

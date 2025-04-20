@@ -1271,9 +1271,38 @@ a:hover {
 }
 
 /* Publications Section */
-.publications-section {
-    padding: 5rem 1rem;
+.publications {
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 246, 250, 0.95));
+    padding: 5rem 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.publications::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(72, 52, 212, 0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(72, 52, 212, 0.05) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(72, 52, 212, 0.05) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(72, 52, 212, 0.05) 75%);
+    background-size: 20px 20px;
+    opacity: 0.1;
+    z-index: 1;
+}
+
+.publications h2 {
+    color: var(--primary-color);
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.publications h2::after {
+    background: linear-gradient(90deg, var(--primary-color), transparent);
 }
 
 .publication-item {
@@ -1282,69 +1311,141 @@ a:hover {
     border-radius: 15px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
     margin-bottom: 2rem;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid rgba(72, 52, 212, 0.1);
     max-width: 1000px;
     margin: 0 auto 2rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+}
+
+.publication-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(72, 52, 212, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
 }
 
 .publication-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(72, 52, 212, 0.15);
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(72, 52, 212, 0.2);
     border-color: var(--primary-color);
 }
 
-.publication-title {
+.publication-item:hover::before {
+    transform: translateX(100%);
+}
+
+.publication-item h3 {
     color: var(--primary-color);
     font-size: 1.5rem;
     margin-bottom: 1rem;
     line-height: 1.4;
     font-weight: 600;
+    position: relative;
+    padding-left: 20px;
+    transition: all 0.3s ease;
+}
+
+.publication-item h3::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+}
+
+.publication-item:hover h3::before {
+    transform: translateY(-50%) scale(1.5);
+    box-shadow: 0 0 15px var(--primary-color);
 }
 
 .publication-venue {
     color: var(--secondary-color);
     font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    margin: 1rem 0;
+    padding-left: 20px;
+    position: relative;
+    opacity: 0.9;
 }
 
 .publication-indexing {
     color: var(--text-color);
     margin: 1rem 0;
-    padding: 0.5rem 0;
+    padding: 1rem 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
 }
 
-.publication-doi {
-    display: inline-block;
+.doi-link {
+    display: inline-flex;
+    align-items: center;
     color: var(--primary-color);
     text-decoration: none;
     margin-top: 1rem;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1.2rem;
     border: 1px solid var(--primary-color);
-    border-radius: 5px;
+    border-radius: 8px;
     transition: all 0.3s ease;
     font-family: 'Courier New', monospace;
+    position: relative;
+    overflow: hidden;
+    background: rgba(72, 52, 212, 0.05);
 }
 
-.publication-doi:hover {
+.doi-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: var(--primary-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+    z-index: -1;
+}
+
+.doi-link:hover {
     color: white;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(72, 52, 212, 0.2);
 }
 
-.indexing-badge {
-    display: inline-block;
-    padding: 0.3rem 0.8rem;
-    margin: 0.2rem;
-    border-radius: 15px;
-    background: rgba(72, 52, 212, 0.1);
-    color: var(--primary-color);
-    font-size: 0.9rem;
-    font-weight: 500;
+.doi-link:hover::before {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+@keyframes fadeInSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.publication-item {
+    animation: fadeInSlideUp 0.6s ease-out forwards;
 }
 
 /* Particle effect */
@@ -1383,4 +1484,304 @@ a:hover {
     border-right: 3px solid var(--primary-color);
     animation: typewriter 4s steps(40) 1s forwards,
               blink 0.75s step-end infinite;
+}
+
+.tech-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.circuit-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.circuit-line {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        var(--primary-color) 50%, 
+        transparent 100%);
+    opacity: 0.3;
+    transform-origin: left;
+    animation: circuit-animate 8s linear infinite;
+}
+
+@keyframes circuit-animate {
+    0% {
+        transform: scaleX(0);
+        opacity: 0;
+    }
+    5% {
+        opacity: 0.5;
+    }
+    95% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: scaleX(1);
+        opacity: 0;
+    }
+}
+
+.code-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.code-element {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    color: var(--primary-color);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: code-float 4s ease-out forwards;
+}
+
+@keyframes code-float {
+    0% {
+        transform: translateY(20px);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Update education section styles */
+#education {
+    background: linear-gradient(135deg, #000000, #1a1a1a);
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.education-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.education-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.education-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.education-item:hover::before {
+    transform: translateX(100%);
+}
+
+/* Firmware Animation Elements */
+@keyframes binaryRain {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes circuitPulse {
+    0% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scale(1.05);
+    }
+    100% {
+        opacity: 0.1;
+        transform: scale(1);
+    }
+}
+
+@keyframes dataFlow {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(45deg, transparent 45%, rgba(108, 92, 231, 0.1) 45%, rgba(108, 92, 231, 0.1) 55%, transparent 55%),
+        linear-gradient(-45deg, transparent 45%, rgba(108, 92, 231, 0.1) 45%, rgba(108, 92, 231, 0.1) 55%, transparent 55%);
+    background-size: 30px 30px;
+    opacity: 0.3;
+    z-index: 1;
+    animation: circuitPulse 3s infinite;
+}
+
+.binary-rain {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.binary-column {
+    position: absolute;
+    color: rgba(108, 92, 231, 0.2);
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1;
+    animation: binaryRain 8s linear infinite;
+    white-space: nowrap;
+}
+
+.circuit-path {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, 
+        transparent,
+        var(--primary-color),
+        transparent
+    );
+    animation: dataFlow 3s linear infinite;
+    opacity: 0.2;
+}
+
+/* Update hero section */
+.hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Firmware-themed decorative elements */
+.firmware-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.chip-icon {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(108, 92, 231, 0.2);
+    border-radius: 6px;
+    animation: circuitPulse 4s infinite;
+}
+
+.chip-icon::before,
+.chip-icon::after {
+    content: '';
+    position: absolute;
+    background: rgba(108, 92, 231, 0.2);
+}
+
+.chip-icon::before {
+    top: 50%;
+    left: -20px;
+    width: 20px;
+    height: 2px;
+    transform: translateY(-50%);
+}
+
+.chip-icon::after {
+    left: 50%;
+    top: -20px;
+    width: 2px;
+    height: 20px;
+    transform: translateX(-50%);
+}
+
+/* Add this to your existing script.js */
+.code-snippet {
+    position: absolute;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: rgba(108, 92, 231, 0.3);
+    padding: 10px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    animation: fadeInOut 4s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.3; }
+}
+
+/* Update profile image container for firmware theme */
+.profile-image::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    animation: circuitPulse 3s infinite;
+    z-index: -1;
+}
+
+/* Circuit board pattern overlay */
+.circuit-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(90deg, transparent 49%, rgba(108, 92, 231, 0.1) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 49%, rgba(108, 92, 231, 0.1) 50%, transparent 51%);
+    background-size: 30px 30px;
+    opacity: 0.2;
+    pointer-events: none;
+    z-index: 1;
 } 
