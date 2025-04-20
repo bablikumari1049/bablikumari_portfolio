@@ -232,7 +232,7 @@ body {
     margin-bottom: 1rem;
     opacity: 0;
     animation: fadeInUp 1s ease forwards;
-    background: linear-gradient(45deg, #00ff9d, #00b8ff);
+    background: linear-gradient(45deg, #006ef5, #00b8ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     position: relative;
@@ -370,7 +370,7 @@ section h2:hover::after {
     border: 5px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
     position: relative;
-    background: linear-gradient(45deg, #00ff9d, #00b8ff);
+    background: linear-gradient(45deg, #00aaff, #00b8ff);
     padding: 5px;
     z-index: 1;
     transform: translateZ(0); /* Force hardware acceleration */
@@ -447,7 +447,7 @@ section h2:hover::after {
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     position: relative;
-    background: linear-gradient(45deg, #00ff9d, #00b8ff);
+    background: linear-gradient(45deg, rgba(0, 150, 170, 0.667), #00b8ff);
     padding: 5px;
     z-index: 1;
     transform: translateZ(0); /* Force hardware acceleration */
