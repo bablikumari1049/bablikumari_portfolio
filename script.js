@@ -121,22 +121,77 @@ document.addEventListener('DOMContentLoaded', () => {
         hero.style.backgroundPositionY = `${scroll * 0.5}px`;
     });
 
-    // Animate elements on scroll
+    // Enhanced skill items animation
+    const skillItemsEnhanced = document.querySelectorAll('.skill-item');
+    skillItemsEnhanced.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+        
+        // Add hover effect for skill icons
+        const icon = item.querySelector('i');
+        item.addEventListener('mouseenter', () => {
+            icon.style.transform = 'scale(1.2) rotate(360deg)';
+        });
+        item.addEventListener('mouseleave', () => {
+            icon.style.transform = 'scale(1) rotate(0)';
+        });
+    });
+
+    // Enhanced certification items animation
+    const certItems = document.querySelectorAll('.cert-item');
+    certItems.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.1}s`;
+        
+        // Add hover effect for certification icons
+        const icon = item.querySelector('i');
+        item.addEventListener('mouseenter', () => {
+            icon.style.transform = 'scale(1.2) rotate(360deg)';
+        });
+        item.addEventListener('mouseleave', () => {
+            icon.style.transform = 'scale(1) rotate(0)';
+        });
+    });
+
+    // Enhanced achievement items animation
+    const achievementItemsEnhanced = document.querySelectorAll('.achievement-item');
+    achievementItemsEnhanced.forEach((item, index) => {
+        item.style.animationDelay = `${index * 0.2}s`;
+        
+        // Add hover effect for achievement items
+        item.addEventListener('mouseenter', () => {
+            item.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateY(0) scale(1)';
+        });
+    });
+
+    // Intersection Observer for animations
     const animateOnScroll = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
+                entry.target.classList.add('visible');
+                entry.target.style.transform = 'translateY(0)';
+                entry.target.style.opacity = '1';
             }
         });
-    }, { threshold: 0.2 });
+    }, observerOptions);
 
-    // Apply animations to elements
-    document.querySelectorAll('.skill-item, .project-item, section h2, .achievement-item, .cert-item').forEach((item, index) => {
+    // Observe elements for animation
+    document.querySelectorAll('.skill-item, .cert-item, .achievement-item').forEach(item => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(20px)';
-        item.style.transition = 'all 0.6s ease';
-        item.style.transitionDelay = `${index * 0.1}s`;
+        item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
         animateOnScroll.observe(item);
+    });
+
+    // Publication link hover effect
+    document.querySelectorAll('.publication-link').forEach(link => {
+        link.addEventListener('mouseenter', () => {
+            link.style.transform = 'translateY(-3px)';
+        });
+        link.addEventListener('mouseleave', () => {
+            link.style.transform = 'translateY(0)';
+        });
     });
 
     // Tech stack hover effects
